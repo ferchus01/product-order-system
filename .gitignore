@@ -1,0 +1,86 @@
+# Build results
+bin/
+obj/
+out/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mono Auto Generated Files
+mono_crash.*
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folders for IDEs
+.vscode/
+.idea/
+.vs/
+
+# Rider
+*.sln.iml
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Azure Pipelines
+.azure/
+
+# JetBrains Rider
+.idea/
+
+# DotNet Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Temporary files
+*.swp
+*.bak
+*.tmp
+*.temp
+*.log
+
+# Visual Studio 2019/2022 Cache directories
+.vs/
+
+# Debugging
+*.log
+
+# macOS specific files
+.DS_Store
+
+# Log and Trace files
+*.log
+*.tlg
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+
+# Visual Studio Code workspace files
+*.code-workspace
+
+# Test Results
+TestResults/
+*.trx
+*.coverage
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Web specific files
+wwwroot/
+node_modules/
