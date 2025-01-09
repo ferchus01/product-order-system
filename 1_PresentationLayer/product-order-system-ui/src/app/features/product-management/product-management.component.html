@@ -1,0 +1,60 @@
+<div class="admin-products-container">
+  <mat-toolbar color="primary">
+    <span>Gestión de Productos</span>
+    <span class="spacer"></span>
+    <button mat-raised-button color="accent" (click)="openProductDialog()">Agregar Producto</button>
+  </mat-toolbar>
+
+  <mat-form-field appearance="outline" class="search-bar">
+    <mat-label>Buscar Producto</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por nombre" />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <mat-table [dataSource]="dataSource" matSort class="products-table">
+
+    <!-- Nombre -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+      <mat-cell *matCellDef="let product"> {{ product.name }} </mat-cell>
+    </ng-container>
+
+    <!-- Imagen -->
+    <ng-container matColumnDef="imageUrl">
+      <mat-header-cell *matHeaderCellDef> Imagen </mat-header-cell>
+      <mat-cell *matCellDef="let product">
+        <img [src]="product.imageUrl" alt="{{ product.name }}" class="product-image" />
+      </mat-cell>
+    </ng-container>
+
+    <!-- Precio -->
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Precio </mat-header-cell>
+      <mat-cell *matCellDef="let product"> {{ product.price }} </mat-cell>
+    </ng-container>
+
+    <!-- Categoría -->
+    <ng-container matColumnDef="category">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Categoría </mat-header-cell>
+      <mat-cell *matCellDef="let product"> {{ product.category }} </mat-cell>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+      <mat-cell *matCellDef="let product">
+        <button mat-icon-button color="primary" (click)="editProduct(product)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteProduct(product)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+</div>

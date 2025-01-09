@@ -15,4 +15,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\4_DataLayer\Project.DataAccess\Project.DataAccess.csproj" />
+    <ProjectReference Include="..\..\Cross-Cutting\Project.Entities\Project.Entities.csproj" />
+    <ProjectReference Include="..\..\Cross-Cutting\Project.MethodParameters\Project.MethodParameters.csproj" />
+  </ItemGroup>
+
 </Project>

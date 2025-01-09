@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>{{ data ? 'Editar Producto' : 'Agregar Producto' }}</h2>
+<mat-dialog-content>
+  <form (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="product.name" name="name" required />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Precio</mat-label>
+      <input matInput [(ngModel)]="product.price" name="price" type="number" required />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Categoría</mat-label>
+      <input matInput [(ngModel)]="product.category" name="category" required />
+    </mat-form-field>
+
+    <!-- Campo para subir imágenes -->
+    <!-- <div>
+      <label for="product-image">Imagen del Producto</label>
+      <input type="file" id="product-image" (change)="onFileSelected($event)" />
+      <img *ngIf="previewUrl" [src]="previewUrl" alt="Previsualización" class="preview-image" />
+    </div> -->
+
+    <div class="image-upload">
+      <label for="product-image">Imagen del Producto</label>
+      <input type="file" id="product-image" (change)="onFileSelected($event)" />
+      <img *ngIf="previewUrl" [src]="previewUrl" alt="Previsualización" class="preview-image" />
+      <p *ngIf="!previewUrl" class="image-tip">Seleccione una imagen para el producto</p>
+    </div>
+
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close>Cancelar</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="isUploading">
+        {{ isUploading ? 'Subiendo...' : 'Guardar' }}
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>

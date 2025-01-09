@@ -19,4 +19,9 @@
     <Folder Include="DataContext\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Cross-Cutting\Project.Entities\Project.Entities.csproj" />
+    <ProjectReference Include="..\..\Cross-Cutting\Project.MethodParameters\Project.MethodParameters.csproj" />
+  </ItemGroup>
+
 </Project>
