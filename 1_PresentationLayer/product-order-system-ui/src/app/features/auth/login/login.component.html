@@ -35,6 +35,9 @@
         </button>
       </form>
     </mat-card-content>
+    <div *ngIf="errorMessage" style="color: red; margin: 0.5rem;">
+      {{ errorMessage }}
+    </div>
     <mat-card-actions>
       <a mat-button routerLink="/auth/register">¿No tienes cuenta? Regístrate</a>
     </mat-card-actions>

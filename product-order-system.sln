@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1_PresentationLayer", "1_PresentationLayer", "{700AD8B1-C7BC-46F5-A470-BF2382AEF176}"
 EndProject
@@ -21,6 +21,24 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.DataAccess", "4_Dat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.WebApi", "2_ServicesLayer\Project.WebApi\Project.WebApi.csproj", "{D6D5CAA5-FC42-495F-B9D1-6170B7B6109B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Entities", "Cross-Cutting\Project.Entities\Project.Entities.csproj", "{4EB3DDCD-C3A3-4683-AF4D-1C2A0CB4A030}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.MethodParameters", "Cross-Cutting\Project.MethodParameters\Project.MethodParameters.csproj", "{F7AA5753-39BB-4F06-8C52-D4D4ADB569D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredProcedures", "{D0311650-F1E5-465A-91F9-5ED0A5E4ADD9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{43C417DC-C70D-4AA5-8DD8-66998AE8FAA4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Orders", "Orders", "{7073C3C6-7AAF-46EA-8F07-0AFFC21A7DEB}"
+	ProjectSection(SolutionItems) = preProject
+		GetAllOrdersWithDetails.sql = GetAllOrdersWithDetails.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Orders", "Orders", "{3D6A9633-33E1-49DD-890A-0F5FF60F6509}"
+	ProjectSection(SolutionItems) = preProject
+		trg_Orders_Insert.sql = trg_Orders_Insert.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +57,14 @@ Global
 		{D6D5CAA5-FC42-495F-B9D1-6170B7B6109B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6D5CAA5-FC42-495F-B9D1-6170B7B6109B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6D5CAA5-FC42-495F-B9D1-6170B7B6109B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EB3DDCD-C3A3-4683-AF4D-1C2A0CB4A030}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EB3DDCD-C3A3-4683-AF4D-1C2A0CB4A030}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EB3DDCD-C3A3-4683-AF4D-1C2A0CB4A030}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EB3DDCD-C3A3-4683-AF4D-1C2A0CB4A030}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7AA5753-39BB-4F06-8C52-D4D4ADB569D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7AA5753-39BB-4F06-8C52-D4D4ADB569D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7AA5753-39BB-4F06-8C52-D4D4ADB569D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7AA5753-39BB-4F06-8C52-D4D4ADB569D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,5 +73,11 @@ Global
 		{56BC7EDC-9DA6-441F-9DF3-3ADD0CD5206D} = {1F46CF07-20EB-4B1D-B0F5-F05DB6010334}
 		{5CE7EB04-D83C-4F33-A4A5-2FD6C667971B} = {E84876AD-D897-403B-AD84-49E07A690555}
 		{D6D5CAA5-FC42-495F-B9D1-6170B7B6109B} = {82FDBF3F-C0D4-45AC-BAB0-800B35FACC6C}
+		{4EB3DDCD-C3A3-4683-AF4D-1C2A0CB4A030} = {FC6776FC-718E-42E9-A606-48D3332D1D70}
+		{F7AA5753-39BB-4F06-8C52-D4D4ADB569D0} = {FC6776FC-718E-42E9-A606-48D3332D1D70}
+		{D0311650-F1E5-465A-91F9-5ED0A5E4ADD9} = {4876CBE9-C93A-48FD-A2C9-433D033BD4CC}
+		{43C417DC-C70D-4AA5-8DD8-66998AE8FAA4} = {4876CBE9-C93A-48FD-A2C9-433D033BD4CC}
+		{7073C3C6-7AAF-46EA-8F07-0AFFC21A7DEB} = {D0311650-F1E5-465A-91F9-5ED0A5E4ADD9}
+		{3D6A9633-33E1-49DD-890A-0F5FF60F6509} = {43C417DC-C70D-4AA5-8DD8-66998AE8FAA4}
 	EndGlobalSection
 EndGlobal

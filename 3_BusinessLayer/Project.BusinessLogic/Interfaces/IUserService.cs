@@ -11,5 +11,6 @@ namespace Project.BusinessLogic.Interfaces
     public interface IUserService
     {
         Task<Entities.User> RegisterUserAsync(RegisterUserIn registerDto);
+        Task<Entities.User> ValidateUserCredentialsAsync(LoginIn loginDto);
     }
 }

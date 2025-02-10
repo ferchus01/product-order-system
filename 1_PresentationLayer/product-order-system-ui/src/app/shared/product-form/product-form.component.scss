@@ -1,31 +1,66 @@
-.image-upload {
+mat-dialog-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+mat-dialog-content {
+  .form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Espacio entre campos */
+
+    mat-form-field {
+      width: 100%;
+      /* Ajusta si deseas un ancho fijo en algunos campos */
+    }
+  }
+
+  .image-upload {
+    margin-top: 1rem;
+    label {
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 0.25rem;
+    }
+    input[type="file"] {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .preview-image {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .image-tip {
+      font-size: 0.85rem;
+      color: #777;
+      margin-top: 0.25rem;
+    }
+  }
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
   margin-top: 1rem;
-}
-.preview-image {
-  max-width: 100px;
-  margin-top: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-.image-tip {
-  font-size: 0.9rem;
-  color: #888;
+  gap: 1rem; /* Separación entre botones */
+
+  button[mat-dialog-close] {
+    color: #555;
+  }
 }
 
-
-.mat-dialog-container {
-  padding: 2rem;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-}
-h2 {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 1rem;
-}
-.form-field {
-  width: 100%;
-  margin-bottom: 1rem;
+.success-snackbar {
+  background-color: #4caf50 !important; /* verde */
+  color: #fff !important;
 }
 
+.error-snackbar {
+  background-color: #f44336 !important; /* rojo */
+  color: #fff !important;
+}

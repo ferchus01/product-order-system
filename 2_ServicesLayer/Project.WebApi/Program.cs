@@ -1,13 +1,32 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Project.BusinessLogic.Interfaces;
+using Project.BusinessLogic.Product;
 using Project.BusinessLogic.User;
 using Project.DataAccess.DataContext;
 using Project.DataAccess.Interfaces;
 using Project.DataAccess.Repositories;
 using System;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,   // Ajusta según necesidad
+            ValidateAudience = false, // Ajusta según necesidad
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"])
+            )
+        };
+    });
+    
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -31,9 +50,12 @@ builder.Services.AddCors(options =>
 
 // --- Repositorios
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 // --- Servicios de negocio
 builder.Services.AddScoped<IUserService, User>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddDbContext<ProductOrderSystemContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -52,6 +74,7 @@ app.UseCors("AllowAngularLocalhost");
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

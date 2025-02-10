@@ -1,36 +1,84 @@
 <h2 mat-dialog-title>{{ data ? 'Editar Producto' : 'Agregar Producto' }}</h2>
+
 <mat-dialog-content>
-  <form (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="outline">
-      <mat-label>Nombre</mat-label>
-      <input matInput [(ngModel)]="product.name" name="name" required />
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Precio</mat-label>
-      <input matInput [(ngModel)]="product.price" name="price" type="number" required />
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Categoría</mat-label>
-      <input matInput [(ngModel)]="product.category" name="category" required />
-    </mat-form-field>
+  <!-- Agregamos una referencia local #f="ngForm" -->
+  <form #f="ngForm" (ngSubmit)="onSubmit()">
+    <div class="form-fields">
+      <!-- NOMBRE -->
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput
+               [(ngModel)]="product.name"
+               name="name"
+               required
+               #nameCtrl="ngModel" />
+        <!-- Mensaje de error si no está lleno -->
+        <mat-error *ngIf="nameCtrl.invalid && nameCtrl.touched">
+          El nombre es requerido
+        </mat-error>
+      </mat-form-field>
 
-    <!-- Campo para subir imágenes -->
-    <!-- <div>
-      <label for="product-image">Imagen del Producto</label>
-      <input type="file" id="product-image" (change)="onFileSelected($event)" />
-      <img *ngIf="previewUrl" [src]="previewUrl" alt="Previsualización" class="preview-image" />
-    </div> -->
+      <!-- PRECIO -->
+      <mat-form-field appearance="outline">
+        <mat-label>Precio</mat-label>
+        <input matInput
+               type="number"
+               [(ngModel)]="product.price"
+               name="price"
+               required
+               #priceCtrl="ngModel" />
+        <mat-error *ngIf="priceCtrl.invalid && priceCtrl.touched">
+          El precio es requerido
+        </mat-error>
+      </mat-form-field>
 
-    <div class="image-upload">
-      <label for="product-image">Imagen del Producto</label>
-      <input type="file" id="product-image" (change)="onFileSelected($event)" />
-      <img *ngIf="previewUrl" [src]="previewUrl" alt="Previsualización" class="preview-image" />
-      <p *ngIf="!previewUrl" class="image-tip">Seleccione una imagen para el producto</p>
+      <!-- CATEGORÍA (select con IDs) -->
+      <mat-form-field appearance="outline">
+        <mat-label>Categoría</mat-label>
+        <mat-select
+          [(ngModel)]="product.categoryId"
+          name="category"
+          required
+          #catCtrl="ngModel">
+          <mat-option *ngFor="let cat of categories" [value]="cat.categoryId">
+            {{ cat.description }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="catCtrl.invalid && catCtrl.touched">
+          Debes seleccionar una categoría
+        </mat-error>
+      </mat-form-field>
+
+      <!-- DESCRIPCIÓN -->
+      <mat-form-field appearance="outline">
+        <mat-label>Descripción</mat-label>
+        <textarea matInput
+                  rows="3"
+                  [(ngModel)]="product.description"
+                  name="description"
+                  required
+                  #descCtrl="ngModel">
+        </textarea>
+        <mat-error *ngIf="descCtrl.invalid && descCtrl.touched">
+          La descripción es requerida
+        </mat-error>
+      </mat-form-field>
+
+      <!-- SUBIR IMAGEN -->
+      <div class="image-upload">
+        <label for="product-image">Imagen del Producto</label>
+        <input type="file" id="product-image" (change)="onFileSelected($event)" />
+        <img *ngIf="previewUrl" [src]="previewUrl" alt="Previsualización" class="preview-image" />
+        <p *ngIf="!previewUrl" class="image-tip">Seleccione una imagen para el producto</p>
+      </div>
     </div>
 
+    <!-- BOTONES -->
     <div mat-dialog-actions>
       <button mat-button mat-dialog-close>Cancelar</button>
-      <button mat-raised-button color="primary" type="submit" [disabled]="isUploading">
+      <button mat-raised-button color="primary"
+              type="submit"
+              [disabled]="isUploading || f.invalid">
         {{ isUploading ? 'Subiendo...' : 'Guardar' }}
       </button>
     </div>

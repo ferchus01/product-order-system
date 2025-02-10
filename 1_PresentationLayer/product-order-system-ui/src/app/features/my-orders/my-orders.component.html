@@ -1,0 +1,25 @@
+<div class="my-orders-container">
+  <h2>Mis Órdenes</h2>
+
+  <div *ngIf="orders.length === 0">
+    <p>No tienes órdenes todavía.</p>
+  </div>
+
+  <div class="order-card" *ngFor="let order of orders">
+    <h3>Orden #{{ order.orderId }}</h3>
+    <p>Fecha: {{ order.orderDate }}</p>
+    <p>Estado: {{ order.status }}</p>
+    <p>Entrega Estimada: {{ order.estimatedDeliveryDate }}</p>
+
+    <!-- Detalles -->
+    <div class="order-details">
+      <p><strong>Detalles de la orden:</strong></p>
+      <ul>
+        <li *ngFor="let detail of order.orderDetails">
+          {{ detail.quantity }} x {{ detail.productName }}
+          a ${{ detail.unitPrice }} c/u
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

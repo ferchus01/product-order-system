@@ -1,5 +1,5 @@
 <div class="admin-products-container">
-  <mat-toolbar color="primary">
+  <mat-toolbar>
     <span>Gestión de Productos</span>
     <span class="spacer"></span>
     <button mat-raised-button color="accent" (click)="openProductDialog()">Agregar Producto</button>
@@ -23,7 +23,7 @@
     <ng-container matColumnDef="imageUrl">
       <mat-header-cell *matHeaderCellDef> Imagen </mat-header-cell>
       <mat-cell *matCellDef="let product">
-        <img [src]="product.imageUrl" alt="{{ product.name }}" class="product-image" />
+        <img [src]="product.image" alt="{{ product.name }}" class="product-image" />
       </mat-cell>
     </ng-container>
 
@@ -33,10 +33,10 @@
       <mat-cell *matCellDef="let product"> {{ product.price }} </mat-cell>
     </ng-container>
 
-    <!-- Categoría -->
-    <ng-container matColumnDef="category">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Categoría </mat-header-cell>
-      <mat-cell *matCellDef="let product"> {{ product.category }} </mat-cell>
+    <!-- Categoría (as ID, si no tienes el nombre, o resuélvelo con un pipe) -->
+    <ng-container matColumnDef="categoryId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Categoría (ID) </mat-header-cell>
+      <mat-cell *matCellDef="let product"> {{ product.categoryId }} </mat-cell>
     </ng-container>
 
     <!-- Acciones -->
@@ -57,4 +57,15 @@
   </mat-table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+
+  <ng-template #confirmDialog let-data>
+    <h2 mat-dialog-title>Confirmar Eliminación</h2>
+    <mat-dialog-content>
+      <p>¿Deseas eliminar el producto "<strong>{{ data.name }}</strong>"?</p>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button [mat-dialog-close]="'cancel'">Cancelar</button>
+      <button mat-button color="warn" [mat-dialog-close]="'confirm'">Eliminar</button>
+    </mat-dialog-actions>
+  </ng-template>
 </div>

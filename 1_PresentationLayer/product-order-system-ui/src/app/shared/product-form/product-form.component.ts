@@ -5,24 +5,70 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { MatOptionModule } from '@angular/material/core';
+import { Product, ProductsService } from '../../core/services/products.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
+
+import { Observable, lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-product-form',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule, MatDialogModule, MatButtonModule],
+  imports: [CommonModule, MatFormFieldModule, MatSelectModule, MatSnackBarModule, MatInputModule, FormsModule, MatDialogModule, MatButtonModule, MatOptionModule],
   templateUrl: './product-form.component.html',
   styleUrl: './product-form.component.scss'
 })
 export class ProductFormComponent {
-  product = this.data || { name: '', price: 0, category: '', imageUrl: '' };
+  product = this.data || {
+    name: '',
+    price: 0,
+    categoryId: null,
+    description: '',
+    image: '',
+    stock: 0,
+  };
+  categories: { categoryId: number, description: string }[] = [];
   selectedFile: File | null = null;
   previewUrl: string | null = null;
   isUploading = false;
 
   constructor(
     public dialogRef: MatDialogRef<ProductFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private productService: ProductsService,
+    private snackBar: MatSnackBar
   ) {}
+
+  ngOnInit(): void {
+    if (this.data) {
+      this.product = { ...this.data };
+      // Prepara la imagen a mostrar
+      if (this.product.image) {
+        this.previewUrl = this.product.image;
+      }
+    } else {
+      // Modo nuevo producto
+      this.product = {
+        name: '',
+        price: 0,
+        categoryId: null,
+        description: '',
+        image: '',
+        stock: 0,
+      };
+    }
+
+    // Cargar categorías desde la BD
+    this.productService.getCategories().subscribe({
+      next: (cats) => {
+        this.categories = cats;
+      },
+      error: (err) => {
+        console.error('Error al cargar categorías:', err);
+      }
+    });
+  }
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
@@ -35,7 +81,7 @@ export class ProductFormComponent {
 
   async uploadImage(): Promise<string> {
     if (!this.selectedFile) {
-      return this.product.imageUrl || ''; // Mantén la URL existente si no se seleccionó una nueva imagen
+      return this.product.image || ''; // Mantén la URL existente si no se seleccionó una nueva imagen
     }
 
     this.isUploading = true;
@@ -60,12 +106,49 @@ export class ProductFormComponent {
     }
   }
 
-  async onSubmit(): Promise<void> {
-    try {
-      this.product.imageUrl = await this.uploadImage(); // Sube la imagen y guarda la URL
-      this.dialogRef.close(this.product); // Cierra el diálogo con los datos del producto
-    } catch (error) {
-      console.error('Error al guardar el producto:', error);
-    }
+  onSubmit(): void {
+    this.isUploading = true;
+    this.uploadImage().then((url) => {
+      this.product.image = url;
+
+      // decide si es update o create
+      let obs: Observable<Product>;
+      if (this.product.productId) {
+        obs = this.productService.updateProduct(this.product.productId, this.product);
+      } else {
+        obs = this.productService.createProduct(this.product);
+      }
+
+      obs.subscribe({
+        next: (savedProd) => {
+          const msg = this.product.productId
+            ? 'Producto actualizado con éxito'
+            : 'Producto creado con éxito';
+
+          this.snackBar.open(msg, 'Cerrar', {
+            duration: 3000,
+            panelClass: ['success-snackbar']
+          });
+
+          this.dialogRef.close(savedProd);
+          this.isUploading = false;
+        },
+        error: (err) => {
+          console.error('Error al guardar el producto:', err);
+          this.snackBar.open('Ocurrió un error al guardar el producto', 'Cerrar', {
+            duration: 5000,
+            panelClass: ['error-snackbar']
+          });
+          this.isUploading = false;
+        }
+      });
+    }).catch(err => {
+      console.error('Error al subir la imagen:', err);
+      this.snackBar.open('Ocurrió un error al subir la imagen', 'Cerrar', {
+        duration: 5000,
+        panelClass: ['error-snackbar']
+      });
+      this.isUploading = false;
+    });
   }
 }

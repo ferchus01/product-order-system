@@ -1,0 +1,38 @@
+.header-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+
+  /* Puedes ajustar la altura si deseas */
+  min-height: 64px; /* Por defecto el mat-toolbar ya ocupa ~64px */
+
+  /* Sombra opcional */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+
+  .logo {
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff; /* Asumiendo el color "primary" del toolbar sea oscuro */
+    margin-right: 1rem;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .nav-button {
+    margin-right: 0.5rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

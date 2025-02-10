@@ -1,6 +1,72 @@
-.product-image {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 5px;
+/* product-management.component.scss */
+
+.admin-products-container {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  background-color: #fefefe; /* o #fff si prefieres */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+
+  /* El mat-toolbar dentro */
+  mat-toolbar {
+    padding: 0 1rem;
+    background-color: #e0e0e0;
+    color: #333;
+
+    .spacer {
+      flex: 1 1 auto;
+    }
+  }
+
+  .search-bar {
+    margin: 0.5rem 1rem 1rem; /* arriba, lados, abajo */
+    width: 300px;             /* ajusta ancho */
+    max-width: 100%;          /* responsive */
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .products-table {
+    margin: 0 1rem 1rem;
+    border-top: 1px solid #ddd;
+  }
+
+  .product-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+}
+
+/* Ajustes para mat-table, mat-header-cell, mat-cell, etc. */
+.mat-header-cell,
+.mat-cell {
+  padding: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.mat-header-cell {
+  font-weight: 600;
+}
+
+.mat-sort-header-container {
+  .mat-sort-header-arrow {
+    color: #666;
+  }
+}
+
+/* Ajustes para mat-paginator */
+mat-paginator {
+  margin: 0 1rem 1rem;
+}
+
+/* Botones de acciones */
+mat-cell button.mat-icon-button[color="warn"] {
+  margin-left: 0.5rem;        /* separa el botón 'delete' del 'edit' */
 }

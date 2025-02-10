@@ -24,6 +24,9 @@ export class RegisterComponent {
     private authService: AuthService
   ) {
     this.registerForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required]
@@ -32,15 +35,19 @@ export class RegisterComponent {
 
   togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
+    const passwordField = document.querySelector('input[formControlName="password"]');
+    if (passwordField) {
+      passwordField.setAttribute('type', this.passwordVisible ? 'text' : 'password');
+    }
   }
 
   onSubmit(): void {
     if (this.registerForm.invalid) return;
 
-    const { email, password, confirmPassword } = this.registerForm.value;
+    const { firstName, lastName, username, email, password } = this.registerForm.value;
     // Si quieres, validas que password === confirmPassword antes de enviar.
 
-    this.authService.register({ email, password })
+    this.authService.register({ firstName, lastName, username, email, password })
       .subscribe({
         next: (res) => {
           // Maneja respuesta exitosa, redirección, etc.

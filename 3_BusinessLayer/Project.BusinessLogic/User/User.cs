@@ -7,16 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Project.DataAccess.Interfaces;
+using Project.Entities;
 
 namespace Project.BusinessLogic.User
 {
     public class User : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly ICustomerRepository _customerRepository;
 
-        public User(IUserRepository userRepository)
+        public User(IUserRepository userRepository, ICustomerRepository customerRepository)
         {
             _userRepository = userRepository;
+            _customerRepository = customerRepository;
         }
 
         public async Task<Entities.User> RegisterUserAsync(RegisterUserIn registerDto)
@@ -44,6 +47,18 @@ namespace Project.BusinessLogic.User
             // 4. Guardar el usuario en la BD
             await _userRepository.AddUserAsync(newUser);
 
+            var newCustomer = new Customer
+            {
+                FirstName = registerDto.FirstName,
+                LastName = registerDto.LastName,
+                Email = registerDto.Email,
+                RegistrationDate = DateTime.UtcNow,
+                UserId = newUser.UserId  // Enlazamos con el user creado
+            };
+
+            // 6. Guardamos el Customer
+            await _customerRepository.AddCustomerAsync(newCustomer);
+
             // 5. Retornar el usuario para que el Controller decida qué hacer
             return newUser;
         }
@@ -57,6 +72,34 @@ namespace Project.BusinessLogic.User
                     System.Text.Encoding.UTF8.GetBytes(password)
                 );
                 return Convert.ToBase64String(hashedBytes);
+            }
+        }
+
+
+        public async Task<Entities.User> ValidateUserCredentialsAsync(LoginIn loginDto)
+        {
+            // 1. Buscar el usuario por email
+            var user = await _userRepository.GetByEmailAsync(loginDto.Email);
+            if (user == null)
+                return null; // No existe el email
+
+            // 2. Verificar la contraseña hasheada
+            bool isValidPassword = VerifyPassword(user.Password, loginDto.Password);
+            if (!isValidPassword)
+                return null; // Contraseña incorrecta
+
+            return user; // Ok, credenciales válidas
+        }
+
+        private bool VerifyPassword(string storedHash, string providedPassword)
+        {
+            // Ejemplo simple con SHA256 
+            // (Recuerda usar BCrypt / Argon2 / PBKDF2 en escenarios productivos)
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                var providedHashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(providedPassword));
+                var providedHash = Convert.ToBase64String(providedHashBytes);
+                return (providedHash == storedHash);
             }
         }
     }

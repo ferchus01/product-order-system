@@ -32,6 +32,10 @@ mat-card-title {
   text-align: center;
 }
 
+mat-card-header {
+  padding-bottom: 16px;
+}
+
 /* (Opcional) Ajustes para mat-error */
 mat-error {
   font-size: 0.8rem;

@@ -1,30 +1,5 @@
-<mat-toolbar color="primary" class="header-toolbar">
-  <!-- Logo o Título -->
-  <span class="logo">E-Commerce</span>
 
-  <!-- Navbar -->
-  <span class="nav-links">
-    <a mat-button routerLink="/">Inicio</a>
-    <a mat-button routerLink="/products">Productos</a>
-    <a mat-button routerLink="/offers">Ofertas</a>
-    <a mat-button routerLink="/contact">Contacto</a>
-  </span>
-
-  <!-- Botón de Login/Registro -->
-  <span class="auth-buttons">
-    <button mat-flat-button color="accent" routerLink="/login">Iniciar Sesión</button>
-    <button mat-flat-button color="primary" routerLink="/register">Registrarse</button>
-  </span>
-</mat-toolbar>
 <div class="home-container">
-
-  <!-- 1. Banner/Slider Principal -->
-  <!-- <section class="banner-slider">
-    <mat-card>
-      <img src="https://picsum.photos/seed/electronics/1200/400" alt="Promoción Principal" />
-    </mat-card>
-  </section> -->
-
   <!-- 2. Filtro de Categorías -->
   <section class="categories-filter">
     <h2>Filtrar por Categorías</h2>
@@ -43,21 +18,15 @@
   </section>
 
   <!-- 3. Productos en Cards -->
-  <section class="products-list">
-    <h2>Productos</h2>
-    <div class="products-grid">
-      <mat-card *ngFor="let product of filteredProducts" class="product-card">
-        <img mat-card-image [src]="product.image" alt="{{ product.name }}" />
-        <mat-card-title>{{ product.name }}</mat-card-title>
-        <mat-card-content>
-          <p>{{ product.description }}</p>
-          <strong>{{ product.price | currency }}</strong>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button color="primary">Comprar</button>
-        </mat-card-actions>
-      </mat-card>
+  <div class="products-grid">
+    <div class="product-card" *ngFor="let product of products">
+      <img [src]="product.image" alt="{{ product.name }}">
+      <h3>{{ product.name }}</h3>
+      <p>{{ product.price | currency }}</p>
+      <button mat-raised-button color="primary" (click)="buyProduct(product)">
+        Comprar
+      </button>
     </div>
-  </section>
+  </div>
 
 </div>
